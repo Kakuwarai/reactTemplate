@@ -6,29 +6,45 @@ import * as Form from "@radix-ui/react-form";
 import { Loader2 } from "lucide-react";
 import { User, Lock } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from 'next/navigation'
+// GlobalFunctions.js
+import { globalAPI } from "./function/globalFunctions";
+import { useQueries, useQuery, useMutation } from "@tanstack/react-query";
+//localStorage
+import useStorage from "./function/zLocalStorage";
+
 
 export default function Home() {
   const [username, setUsername] = useState(""),
-    [password, setPassword] = useState("");
+    [password, setPassword] = useState(""),
+    router = useRouter(),
+    [data, setData] = useState({}),
+    setStorage = (nameKey, value) => {
+      setData((prevData) => ({ ...prevData, [nameKey]: value }));
+    },
+    getStorage = (nameKey) => {
+      return data[nameKey];
+    }
 
-  async function login() {
-    // await globalAPI().get(`Login/login`,{
-    //   username: username,
-    //   password: password
-    // })
-    // .then(async (response) => {
-    //   if (response.status == 200) {
-    //    console.log("Click!");
-    //   }
-    //   else if (response.status == 202 || response.status == 401) {
-    //   } else {
-    //   }
-    // }).catch((error) => {
-    // })
-  }
+  //functionLogin
+  const tanLogin = useMutation({
+    mutationFn: () =>
+      globalAPI().post(`Login/login`, {
+        username: username,
+        password: password
+      }),
+    onSuccess: (res) => {
+      setStorage('userData', res.data)
+      router.push('/dashboard');
+    },
+    onError: (error) => {
+      console.log(error.response.data);
+    }
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    tanLogin.mutate()
   };
 
   return (
@@ -109,7 +125,7 @@ export default function Home() {
                   </p>
                 </div>
                 <Form.Submit asChild>
-                  <Button className="w-full">Login</Button>
+                  <Button className="w-full">{tanLogin.isPending ? 'Loading...' : 'Login'}</Button>
                 </Form.Submit>
               </div>
             </Form.Root>
