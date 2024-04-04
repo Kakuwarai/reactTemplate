@@ -6,14 +6,19 @@ import * as Form from "@radix-ui/react-form";
 import { Loader2 } from "lucide-react";
 import { User, Lock } from "lucide-react";
 import { useState } from "react";
+import { useStore } from "@/store/store";
 
 export default function Home() {
   const [username, setUsername] = useState(""),
     [password, setPassword] = useState("");
 
-  async function login(e) {
-    e.preventDefault();
-    console.log("onlcick");
+  const increasePopulation = useStore((state) => state.increasePopulation);
+  const bears = useStore((state) => state.bears);
+
+  console.log(bears);
+
+  async function login() {
+    increasePopulation();
     // await globalAPI().get(`Login/login`,{
     //   username: username,
     //   password: password
@@ -113,7 +118,8 @@ export default function Home() {
                 </div>
                 <Form.Submit asChild>
                   <Button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault();
                       login();
                     }}
                     className="w-full"
