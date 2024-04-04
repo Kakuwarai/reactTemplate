@@ -6,19 +6,12 @@ import * as Form from "@radix-ui/react-form";
 import { Loader2 } from "lucide-react";
 import { User, Lock } from "lucide-react";
 import { useState } from "react";
-import { useStore } from "@/store/store";
 
 export default function Home() {
   const [username, setUsername] = useState(""),
     [password, setPassword] = useState("");
 
-  const increasePopulation = useStore((state) => state.increasePopulation);
-  const bears = useStore((state) => state.bears);
-
-  console.log(bears);
-
   async function login() {
-    increasePopulation();
     // await globalAPI().get(`Login/login`,{
     //   username: username,
     //   password: password
@@ -26,18 +19,17 @@ export default function Home() {
     // .then(async (response) => {
     //   if (response.status == 200) {
     //    console.log("Click!");
-
     //   }
     //   else if (response.status == 202 || response.status == 401) {
-
     //   } else {
-
     //   }
-
     // }).catch((error) => {
-
     // })
   }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <>
@@ -54,7 +46,7 @@ export default function Home() {
               <h1 className="font-bold">Welcome</h1>
               <p className="text-xs">Login to access your account</p>
             </div>
-            <Form.Root className="FormRoot">
+            <Form.Root onSubmit={handleSubmit} className="FormRoot">
               <div className="flex flex-col gap-4 xl:h-[250px]">
                 <Form.Field className="grid" name="email">
                   <div className="relative">
@@ -117,15 +109,7 @@ export default function Home() {
                   </p>
                 </div>
                 <Form.Submit asChild>
-                  <Button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      login();
-                    }}
-                    className="w-full"
-                  >
-                    Login
-                  </Button>
+                  <Button className="w-full">Login</Button>
                 </Form.Submit>
               </div>
             </Form.Root>

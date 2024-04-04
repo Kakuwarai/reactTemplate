@@ -1,15 +1,14 @@
+import Header from "./layouts/header";
+import Footer from "./layouts/footer";
 
-import Header from './layouts/header'
-import Footer from './layouts/footer'
- 
 export default function Layout({ children }) {
-
- 
   return (
     <>
-      <Header/>
-      <main>{children}</main>
-      <Footer />
+      <div className="font-primary">
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </div>
     </>
-  )
+  );
 }
