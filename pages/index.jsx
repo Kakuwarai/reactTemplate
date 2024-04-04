@@ -9,14 +9,15 @@ import { User, Lock } from "lucide-react";
 
 
 //react state
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation'
 // GlobalFunctions.js
 import { globalAPI } from "./function/globalFunctions";
 import { useQueries, useQuery, useMutation } from "@tanstack/react-query";
 //localStorage
 import useStorage from "./function/zLocalStorage";
-
+//RealTime
+import { HubConnectionBuilder } from "@microsoft/signalr";
 
 export default function Home() {
   const [username, setUsername] = useState(""),
@@ -29,6 +30,35 @@ export default function Home() {
     getStorage = (nameKey) => {
       return data[nameKey];
     }
+
+
+//functionRealTime
+const connection = new HubConnectionBuilder()
+    .withUrl('http://192.168.0.35:5289/Groupnb@2024Lumping')
+    .withAutomaticReconnect()
+    .build()
+const [messages, setMessage] = useState([]) 
+
+connection.on('ReceiveMessage', (user, message) => {
+  const newMessages = [...messages, { user, message }];
+
+        setMessage(newMessages)
+        console.log(message);
+
+        tanLogin.mutate();
+      });
+
+
+
+      useEffect(()=>{
+        connection.start()
+        .then(() => {
+            console.log("Connection established");
+        })
+        .catch((err) => {
+            console.error(err.toString());
+        })
+      },[])
 
   //functionLogin
   const tanLogin = useMutation({
