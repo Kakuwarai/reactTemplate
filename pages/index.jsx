@@ -1,18 +1,18 @@
 // shadcn
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import * as Form from '@radix-ui/react-form';
+import * as Form from "@radix-ui/react-form";
 // shadncnLogo
 import { Loader2 } from "lucide-react";
 import { User, Lock } from "lucide-react";
 import { useState } from "react";
 
 export default function Home() {
+  const [username, setUsername] = useState(""),
+    [password, setPassword] = useState("");
 
-  const [username, setUsername] = useState(''),
-    [password, setPassword] = useState('')
-
-  async function login() {
+  async function login(e) {
+    e.preventDefault();
     console.log("onlcick");
     // await globalAPI().get(`Login/login`,{
     //   username: username,
@@ -32,7 +32,6 @@ export default function Home() {
     // }).catch((error) => {
 
     // })
-
   }
 
   return (
@@ -51,40 +50,34 @@ export default function Home() {
               <p className="text-xs">Login to access your account</p>
             </div>
             <Form.Root className="FormRoot">
-              <div className="flex flex-col gap-6">
-
-                <Form.Field className="grid " name="email">
-                  <div className="flex items-baseline justify-between">
-                    <Form.Message className="text-[13px] text-black opacity-[0.8]" match="valueMissing">
-                      Please enter your username
-                    </Form.Message>
-                  </div>
+              <div className="flex flex-col gap-4 xl:h-[250px]">
+                <Form.Field className="grid" name="email">
                   <div className="relative">
                     <span className="px-2  text-primaryGray border-r-2 absolute top-2.5  text-pgray">
                       <User size={16} />
                     </span>
                     <Form.Control asChild>
-
                       <Input
                         value={username}
-                        onChange={event => setUsername(event.target.value)}
+                        onChange={(event) => setUsername(event.target.value)}
                         className="xl:w-[300px] xl:pl-10 text-xs "
                         type="text"
                         placeholder="Username"
                         required
                       />
                     </Form.Control>
-
+                    <div className="flex items-baseline justify-between">
+                      <Form.Message
+                        className="text-rose-500/90 text-xs p-1.5 "
+                        match="valueMissing"
+                      >
+                        Invalid Username
+                      </Form.Message>
+                    </div>
                   </div>
                 </Form.Field>
 
-
-                <Form.Field className="grid " name="password">
-                  <div className="flex items-baseline justify-between">
-                    <Form.Message className="text-[13px] text-red opacity-[0.8]" match="valueMissing">
-                      Please enter your password
-                    </Form.Message>
-                  </div>
+                <Form.Field className="grid" name="password">
                   <div className="relative">
                     <span className="px-2  text-primaryGray border-r-2 absolute top-2.5 text-pgray">
                       <Lock size={16} />
@@ -92,21 +85,26 @@ export default function Home() {
                     <Form.Control asChild>
                       <Input
                         value={password}
-                        onChange={event => setPassword(event.target.value)}
+                        onChange={(event) => setPassword(event.target.value)}
                         className="xl:w-[300px] xl:pl-10 text-xs "
                         type="password"
                         placeholder="Password"
                         required
                       />
                     </Form.Control>
+                    <div className="flex items-baseline justify-between">
+                      <Form.Message
+                        className="text-rose-500/90 text-xs p-1.5 "
+                        match="valueMissing"
+                      >
+                        Invalid Password
+                      </Form.Message>
+                    </div>
                     <span className="px-2 text-xs cursor-pointer text-primaryGray hover:text-primary/90 border-r-2 absolute top-2.5 right-0 text-pgray">
                       Show
                     </span>
                   </div>
                 </Form.Field>
-
-
-
 
                 <div className="flex items-end justify-end">
                   <p className="text-xs text-primaryGray hover:text-primary/90 cursor-pointer">
@@ -114,7 +112,14 @@ export default function Home() {
                   </p>
                 </div>
                 <Form.Submit asChild>
-                  <Button onClick={() => { login() }} className="w-full">Login</Button>
+                  <Button
+                    onClick={() => {
+                      login();
+                    }}
+                    className="w-full"
+                  >
+                    Login
+                  </Button>
                 </Form.Submit>
               </div>
             </Form.Root>

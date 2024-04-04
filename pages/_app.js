@@ -18,9 +18,7 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <div>
-      {isRootRoute ?
-        <Component {...pageProps} /> :
-        <Layout> <Component {...pageProps} />  </Layout>}
+      {isRootRoute ? <Component {...pageProps} /> : <Layout> <Component {...pageProps} />  </Layout>}
     </div>
   )
 }
