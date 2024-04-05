@@ -12,9 +12,9 @@ export default function Layout({ children }) {
         <Sidebar />
         <div className={` ${openbar ? "ml-[80px]" : "ml-[300px]"}`}>
           <Header />
-          <div className="p-4">
+          <div className="">
             <div className="">{children}</div>
-            <div className="my-4">
+            <div className="">
               <Footer />
             </div>
           </div>
