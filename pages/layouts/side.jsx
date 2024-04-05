@@ -23,7 +23,7 @@ const side = () => {
   }
 
 
-  // mark kapag inopen mo to yung desktop at yung desktop bar neto bubukas
+  // mark and mon kapag inopen mo to yung desktop at yung desktop bar neto bubukas
   // useEffect(() => {
   //   if (width >= 1500) {
   //     setopenbar(!openbar);
