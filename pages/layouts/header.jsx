@@ -49,7 +49,7 @@ export const header = () => {
             <button>
               <Menu onClick={handleBarsClick} className="text-pgray" />
             </button>
-            <div className="flex gap-2 items-center text-xs ">
+            <div className=" gap-2 items-center text-xs hidden md:flex ">
               <h1 className="">Welcome,</h1>
               <p className="text-xs font-semibold ">Nathalie Babinaeu</p>
             </div>

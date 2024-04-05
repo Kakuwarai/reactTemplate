@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //lucide icons
 
@@ -10,28 +10,37 @@ import { User, Lock, ChevronDown, ChevronUp } from "lucide-react";
 
 import { useStore } from "@/store/store";
 
+import useWindowDimensions from "../function/WindowDimension";
+
 const side = () => {
   const [openSide, setOpenSide] = useState(false);
   const openbar = useStore((state) => state.bar);
+  const setopenbar = useStore((state) => state.setBar);
+  const { width } = useWindowDimensions();
 
-  // mark ito yung sideclick
   function handleSideClick() {
     setOpenSide(!openSide);
   }
 
+  // useEffect(() => {
+  //   if (width >= 1500) {
+  //     setopenbar(!openbar);
+  //   }
+  // }, []);
+
   return (
     <aside
       className={`${
-        openbar ? "w-[80px]" : "w-[300px]"
-      } transition-all border-r borde-b h-screen bg-white text-primary fixed`}
+        openbar ? "w-[80px] hidden lg:block opacity-100  " : "block w-[300px] "
+      } fixed    transition-all border-r border-b h-screen bg-white text-primary `}
     >
-      <div className="px-4 py-1.5 flex items-center  justify-between">
-        <img src="/images/sa2.png" className="w-16" alt="picture" loading="" />
+      <div className="p-[0.9rem] flex items-center  justify-center gap-4">
+        <img src="/images/sa2.png" className="max-w-[47px]" alt="picture" loading="" />
 
-        <h1 className="text-xs font-bold">{openbar ? "" : "System"}</h1>
+        <h1 className="text-xs font-bold">{openbar ? "" : "System Template"}</h1>
       </div>
 
-      <div className={`p-4 my-10 flex flex-col gap-4`}>
+      <div className={`py-10 px-4 h-screen flex flex-col gap-4`}>
         {/* //Dashboard */}
         <div className="flex flex-col gap-2">
           <h1 className="text-sm font-bold">{openbar ? "..." : "Dashboard"}</h1>
@@ -89,10 +98,10 @@ const side = () => {
               />
             </div>
             <div
-              className={`bg-slate-100 rounded-sm transition-all  ${
+              className={`bg-slate-100 rounded-sm transition-all ease-in-out ${
                 openSide
-                  ? "h-auto opacity-100 gap-2 flex flex-col "
-                  : "h-0 gap-0 "
+                  ? "h-[80px] opacity-100 gap-2 flex flex-col"
+                  : "h-0 gap-0  "
               } `}
             >
               <li
