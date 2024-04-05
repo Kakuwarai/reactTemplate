@@ -16,7 +16,7 @@ export const dashboard = () => {
   // if (error) return "An error has occurred: " + error.message;
 
   return (
-    <div className="">
+    <div className="bg-slate-100 p-4">
       {/* <h1>{data.name}</h1>
       <p>{data.description}</p>
       <strong>👀 {data.subscribers_count}</strong>{" "}

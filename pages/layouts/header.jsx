@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
 //lucide icons
-import { Menu } from "lucide-react";
+import { Menu, LogOut, BellRing, Sun } from "lucide-react";
 
 import { useStore } from "@/store/store";
 
@@ -10,8 +10,35 @@ export const header = () => {
   const openbar = useStore((state) => state.bar);
   const setopenbar = useStore((state) => state.setBar);
 
+  const [rightSideBar, setrightSideBar] = useState(false);
+  const [rightSideBarNotif, setrightSideBarNotif] = useState(false);
+  const [rightSideBarSwitchToggle, setrightSideBarSwitchToggle] =
+    useState(false);
+
   function handleBarsClick() {
     setopenbar(!openbar);
+  }
+
+  function handleBarsClickRight() {
+    setrightSideBar(!rightSideBar);
+    //false other bars
+    setrightSideBarNotif(false);
+    setrightSideBarSwitchToggle(false);
+  }
+  function handleBarsClickRightNotif() {
+    setrightSideBarNotif(!rightSideBarNotif);
+
+    //false other bars
+    setrightSideBar(false);
+    setrightSideBarSwitchToggle(false);
+  }
+
+  function handleBarsClickRightThemeToggle() {
+    setrightSideBarSwitchToggle(!rightSideBarSwitchToggle);
+
+    //false other bars
+    setrightSideBar(false);
+    setrightSideBarNotif(false);
   }
 
   return (
@@ -23,24 +50,100 @@ export const header = () => {
               <Menu onClick={handleBarsClick} className="text-pgray" />
             </button>
             <div className="flex gap-2 items-center text-xs ">
-              <h1 className="font-bold text-pgray">Welcome,</h1>
-              <p className="text-xs ">Nathalie Babinaeu</p>
+              <h1 className="">Welcome,</h1>
+              <p className="text-xs font-semibold ">Nathalie Babinaeu</p>
             </div>
           </div>
+          <div className="flex items-center ">
+            <div className="flex items-center gap-4 px-4">
+              <Sun
+                size={16}
+                onClick={handleBarsClickRightThemeToggle}
+                className="cursor-pointer"
+              />
+              <BellRing
+                onClick={handleBarsClickRightNotif}
+                className="cursor-pointer"
+                size={16}
+              />
+            </div>
+            <div
+              className="bg-primary  rounded-full p-2 flex items-center justify-center  cursor-pointer "
+              onClick={handleBarsClickRight}
+            >
+              <h1 className="text-white">NB</h1>
+            </div>
 
-          <div className="bg-primary  rounded-full p-2 flex items-center justify-center  cursor-pointer ">
-            <h1 className="text-white">NB</h1>
+            {/* NIGHT MODE TOGGLE */}
             <div className="relative">
-              <div className="absolute cursor-default bg-white xl:w-[250px] -right-6  top-[2.2rem] border-t h-[200px] rounded-md shadow-md flex flex-col justify-between ">
-            
-               
-                  <div className="p-4 border-b w-full ">
-                    <h1 className="text-xs">Nathalie Babinaeu</h1>
-                  </div>
-                  <div className="p-4 w-full">
-                    <h1 className="text-xs">Nathalie Babinaeu</h1>
-                  </div>
-             
+              <div
+                className={`${
+                  rightSideBarSwitchToggle ? "h-[200px]" : "h-[0]"
+                } transition-all absolute cursor-default bg-white xl:w-[200px] right-0  top-[2.23rem] border-t  rounded-md shadow-md flex flex-col justify-between z-50 `}
+              >
+                <div
+                  className={`${
+                    rightSideBarSwitchToggle ? "flex" : "hidden"
+                  }  p-4 border-b w-full  justify-center cursor-pointer `}
+                >
+                  <h1 className="text-xs font-semibold">Mode</h1>
+                </div>
+                <div
+                  className={`${
+                    rightSideBarSwitchToggle ? "flex" : "hidden"
+                  } p-4 w-full  bg-gray-50 hover:bg-gray-100 items-center justify-center border-t cursor-pointer gap-4 group`}
+                >
+                  <LogOut size={16} className="group-hover:text-rose-700" />
+                  <h1 className="text-xs">Logout</h1>
+                </div>
+              </div>
+            </div>
+            {/* //RING LOGO CLICK */}
+            <div className="relative">
+              <div
+                className={`${
+                  rightSideBarNotif ? "h-[200px]" : "h-[0]"
+                } transition-all absolute cursor-default bg-white xl:w-[200px] right-0  top-[2.23rem] border-t  rounded-md shadow-md flex flex-col justify-between z-50 `}
+              >
+                <div
+                  className={`${
+                    rightSideBarNotif ? "flex" : "hidden"
+                  }  p-4 border-b w-full  justify-center cursor-pointer `}
+                >
+                  <h1 className="text-xs font-semibold">Notification</h1>
+                </div>
+                <div
+                  className={`${
+                    rightSideBarNotif ? "flex" : "hidden"
+                  } p-4 w-full  bg-gray-50 hover:bg-gray-100 items-center justify-center border-t cursor-pointer gap-4 group`}
+                >
+                  <LogOut size={16} className="group-hover:text-rose-700" />
+                  <h1 className="text-xs">Logout</h1>
+                </div>
+              </div>
+            </div>
+            {/* //NB LOGO CLICK */}
+            <div className="relative">
+              <div
+                className={`${
+                  rightSideBar ? "h-[200px]" : "h-[0]"
+                } transition-all absolute cursor-default bg-white xl:w-[200px] right-0  top-[2.23rem] border-t  rounded-md shadow-md flex flex-col justify-between z-50 `}
+              >
+                <div
+                  className={`${
+                    rightSideBar ? "flex" : "hidden"
+                  }  p-4 border-b w-full  justify-center cursor-pointer `}
+                >
+                  <h1 className="text-xs font-semibold">Nathalie Babinaeu</h1>
+                </div>
+                <div
+                  className={`${
+                    rightSideBar ? "flex" : "hidden"
+                  } p-4 w-full  bg-gray-50 hover:bg-gray-100 items-center justify-center border-t cursor-pointer gap-4 group`}
+                >
+                  <LogOut size={16} className="group-hover:text-rose-700" />
+                  <h1 className="text-xs">Logout</h1>
+                </div>
               </div>
             </div>
           </div>

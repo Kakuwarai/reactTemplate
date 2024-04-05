@@ -77,6 +77,9 @@ module.exports = {
       textColor: {
         pgray: "#6b7280",
       },
+      backgroundColor: {
+        pgray: "#6b7280",
+      }
     },
   },
   plugins: [require("tailwindcss-animate")],
