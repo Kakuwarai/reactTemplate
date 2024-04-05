@@ -18,8 +18,15 @@ import { useQueries, useQuery, useMutation } from "@tanstack/react-query";
 import useStorage from "./function/zLocalStorage";
 //RealTime
 import { HubConnectionBuilder } from "@microsoft/signalr";
+import { cookies } from "next/headers";
+//crypting
+import CryptoJS from 'crypto-js';
+//cookies
+import Cookies from 'js-cookie';
 
 export default function Home() {
+  
+
   const [username, setUsername] = useState(""),
     [password, setPassword] = useState(""),
     router = useRouter(),
@@ -32,33 +39,45 @@ export default function Home() {
     }
 
 
-//functionRealTime
-const connection = new HubConnectionBuilder()
+  //functionRealTime
+  const connection = new HubConnectionBuilder()
     .withUrl('http://192.168.0.35:5289/Groupnb@2024Lumping')
     .withAutomaticReconnect()
     .build()
-const [messages, setMessage] = useState([]) 
+  const [messages, setMessage] = useState([])
 
-connection.on('ReceiveMessage', (user, message) => {
-  const newMessages = [...messages, { user, message }];
+  connection.on('ReceiveMessage', (user, message) => {
+    const newMessages = [...messages, { user, message }];
 
-        setMessage(newMessages)
-        console.log(message);
+    cookies().set('login', res.data, { secure: true })
+    console.log(message);
 
-        tanLogin.mutate();
-      });
+    tanLogin.mutate();
+  });
 
 
 
-      useEffect(()=>{
-        connection.start()
-        .then(() => {
-            console.log("Connection established");
-        })
-        .catch((err) => {
-            console.error(err.toString());
-        })
-      },[])
+  useEffect(() => {
+   
+      //functionRealTime
+    connection.start()
+      .then(() => {
+        console.log("Connection established");
+      })
+      .catch((err) => {
+        console.error(err.toString());
+      })
+  }, [])
+
+//AES
+
+const key = CryptoJS.enc.Utf8.parse('GroupNBEncry2024');
+  const iv = CryptoJS.enc.Utf8.parse('GroupNBEncry2024');
+  
+  const encryptAES = (plainText, key, iv) => {
+    const encrypted = CryptoJS.AES.encrypt(plainText, key, { iv: iv });
+    return encrypted.toString();
+  };
 
   //functionLogin
   const tanLogin = useMutation({
@@ -68,8 +87,13 @@ connection.on('ReceiveMessage', (user, message) => {
         password: password
       }),
     onSuccess: (res) => {
-      setStorage('userData', res.data)
-      router.push('/dashboard');
+      try {
+        const encryptedText = encryptAES(JSON.stringify(res.data), key, iv);
+        Cookies.set('uD', encryptedText)
+        router.push('/dashboard')
+      } catch (error) {
+        console.log(error);
+      }
     },
     onError: (error) => {
       console.log(error.response.data);
