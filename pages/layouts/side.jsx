@@ -24,6 +24,7 @@ const side = () => {
 
 
   // mark and mon kapag inopen mo to yung desktop at yung desktop bar neto bubukas
+
   // useEffect(() => {
   //   if (width >= 1500) {
   //     setopenbar(!openbar);
@@ -36,7 +37,7 @@ const side = () => {
         openbar ? "w-[80px] hidden lg:block opacity-100  " : "block w-[300px] "
       } fixed    transition-all border-r border-b h-screen bg-white text-primary `}
     >
-      <div className="p-[0.9rem] flex items-center  justify-center gap-4">
+      <div className={`p-[0.9rem] flex items-center  justify-center ${openbar ? "gap-0" : "gap-4"} `}>
         <img src="/images/sa2.png" className="max-w-[47px]" alt="picture" loading="" />
 
         <h1 className="text-xs font-bold">{openbar ? "" : "System Template"}</h1>
