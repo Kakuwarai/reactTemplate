@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 // lucide
-import { Loader2 } from "lucide-react";
+
 import { User, Lock } from "lucide-react";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 //react state
 import { useState, useEffect } from "react";
@@ -191,9 +192,14 @@ export default function Home() {
                   </p>
                 </div>
                 <Form.Submit asChild>
-                  <Button className="w-full">
-                    {tanLogin.isPending ? "Loading..." : "Login"}
-                  </Button>
+                  {tanLogin.isPending ? (
+                    <Button disabled>
+                      <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                      Loading
+                    </Button>
+                  ) : (
+                    <Button>Login</Button>
+                  )}
                 </Form.Submit>
               </div>
             </Form.Root>
