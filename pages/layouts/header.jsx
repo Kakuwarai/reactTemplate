@@ -12,8 +12,6 @@ export const header = () => {
 
   const [rightSideBar, setrightSideBar] = useState(false);
   const [rightSideBarNotif, setrightSideBarNotif] = useState(false);
-  const [rightSideBarSwitchToggle, setrightSideBarSwitchToggle] =
-    useState(false);
 
   function handleBarsClick() {
     setopenbar(!openbar);
@@ -23,23 +21,17 @@ export const header = () => {
     setrightSideBar(!rightSideBar);
     //false other bars
     setrightSideBarNotif(false);
-    setrightSideBarSwitchToggle(false);
+
   }
   function handleBarsClickRightNotif() {
     setrightSideBarNotif(!rightSideBarNotif);
 
     //false other bars
     setrightSideBar(false);
-    setrightSideBarSwitchToggle(false);
+  
   }
 
-  function handleBarsClickRightThemeToggle() {
-    setrightSideBarSwitchToggle(!rightSideBarSwitchToggle);
 
-    //false other bars
-    setrightSideBar(false);
-    setrightSideBarNotif(false);
-  }
 
   return (
     <>
@@ -58,7 +50,6 @@ export const header = () => {
             <div className="flex items-center gap-4 px-4">
               <Sun
                 size={16}
-                onClick={handleBarsClickRightThemeToggle}
                 className="cursor-pointer"
               />
               <BellRing
@@ -74,36 +65,14 @@ export const header = () => {
               <h1 className="text-white">NB</h1>
             </div>
 
-            {/* NIGHT MODE TOGGLE */}
-            <div className="relative">
-              <div
-                className={`${
-                  rightSideBarSwitchToggle ? "h-[200px]" : "h-[0]"
-                } transition-all absolute cursor-default bg-white xl:w-[200px] right-0  top-[2.23rem] border-t  rounded-md shadow-md flex flex-col justify-between z-50 `}
-              >
-                <div
-                  className={`${
-                    rightSideBarSwitchToggle ? "flex" : "hidden"
-                  }  p-4 border-b w-full  justify-center cursor-pointer `}
-                >
-                  <h1 className="text-xs font-semibold">Mode</h1>
-                </div>
-                <div
-                  className={`${
-                    rightSideBarSwitchToggle ? "flex" : "hidden"
-                  } p-4 w-full  bg-gray-50 hover:bg-gray-100 items-center justify-center border-t cursor-pointer gap-4 group`}
-                >
-                  <LogOut size={16} className="group-hover:text-rose-700" />
-                  <h1 className="text-xs">Logout</h1>
-                </div>
-              </div>
-            </div>
+      
+           
             {/* //RING LOGO CLICK */}
             <div className="relative">
               <div
                 className={`${
                   rightSideBarNotif ? "h-[200px]" : "h-[0]"
-                } transition-all absolute cursor-default bg-white xl:w-[200px] right-0  top-[2.23rem] border-t  rounded-md shadow-md flex flex-col justify-between z-50 `}
+                } transition-all absolute cursor-default bg-white w-[200px] right-0  top-[2.23rem] border-t  rounded-md shadow-md flex flex-col justify-between z-50 `}
               >
                 <div
                   className={`${
@@ -127,7 +96,7 @@ export const header = () => {
               <div
                 className={`${
                   rightSideBar ? "h-[200px]" : "h-[0]"
-                } transition-all absolute cursor-default bg-white xl:w-[200px] right-0  top-[2.23rem] border-t  rounded-md shadow-md flex flex-col justify-between z-50 `}
+                } transition-all absolute cursor-default bg-white w-[200px] right-0  top-[2.23rem] border-t  rounded-md shadow-md flex flex-col justify-between z-50 `}
               >
                 <div
                   className={`${

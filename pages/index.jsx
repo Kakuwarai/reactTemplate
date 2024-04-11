@@ -9,14 +9,9 @@ import { User, Lock } from "lucide-react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 
 //react state
-<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-=======
-import { useState, useEffect } from "react"; 
-import { useRouter } from 'next/navigation'
->>>>>>> c4e9d788d097ba711fb7eab178a6cffbf1ef2c34
 // GlobalFunctions.js
 import { globalAPI, encryptAES } from "./function/globalFunctions";
 import { useQueries, useQuery, useMutation } from "@tanstack/react-query";
@@ -28,12 +23,9 @@ import useStorage from "./function/zLocalStorage";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { cookies } from "next/headers";
 
-<<<<<<< HEAD
 //crypting
 import CryptoJS from "crypto-js";
 
-=======
->>>>>>> c4e9d788d097ba711fb7eab178a6cffbf1ef2c34
 //cookies
 import Cookies from "js-cookie";
 
@@ -86,7 +78,6 @@ export default function Home() {
       });
   }, []);
 
-<<<<<<< HEAD
   //AES
 
   const key = CryptoJS.enc.Utf8.parse("GroupNBEncry2024");
@@ -97,8 +88,6 @@ export default function Home() {
     return encrypted.toString();
   };
 
-=======
->>>>>>> c4e9d788d097ba711fb7eab178a6cffbf1ef2c34
   //functionLogin
   const tanLogin = useMutation({
     mutationFn: () =>
@@ -108,16 +97,10 @@ export default function Home() {
       }),
     onSuccess: (res) => {
       try {
-<<<<<<< HEAD
         const encryptedText = encryptAES(JSON.stringify(res.data), key, iv);
         Cookies.set("uD", encryptedText);
         router.push("/dashboard");
         setopenbar(true);
-=======
-        const encryptedText = encryptAES(JSON.stringify(res.data));
-        Cookies.set('uD', encryptedText)
-        router.push('/dashboard')
->>>>>>> c4e9d788d097ba711fb7eab178a6cffbf1ef2c34
       } catch (error) {
         console.log(error);
       }

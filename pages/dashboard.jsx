@@ -7,7 +7,9 @@ export const dashboard = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["repoData"],
     queryFn: () =>
-    globalAPI().get(`Login/users`),
+    globalAPI().get(`Login/users`).then((res)=> {
+      return res.data
+    }),
   });
 
    if (isPending) return "Loading...";
@@ -16,8 +18,7 @@ export const dashboard = () => {
 
   return (
     <div className=" p-4">
-      <h1>{data.data[0].firstname} {data.data[0].middlename} {data.data[0].lastname}</h1>
-     
+      <h1>{data[0].firstname} {data[0].middlename} {data[0].lastname}</h1>
     </div>
   );
 };
