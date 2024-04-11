@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 // lucide
 import { Loader2 } from "lucide-react";
 import { User, Lock } from "lucide-react";
-import { ReloadIcon } from "@radix-ui/react-icons";
+
 
 //react state
 import { useState, useEffect } from "react";
@@ -15,10 +15,8 @@ import { useRouter } from "next/navigation";
 // GlobalFunctions.js
 import { globalAPI, encryptAES } from "./function/globalFunctions";
 import { useQueries, useQuery, useMutation } from "@tanstack/react-query";
-
 //localStorage
 import useStorage from "./function/zLocalStorage";
-
 //RealTime
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { cookies } from "next/headers";
@@ -27,13 +25,11 @@ import { cookies } from "next/headers";
 import CryptoJS from "crypto-js";
 
 //cookies
-import Cookies from "js-cookie";
-
-//zustand store
-
-import { useStore } from "@/store/store";
+import Cookies from 'js-cookie';
 
 export default function Home() {
+  
+
   const [username, setUsername] = useState(""),
     [password, setPassword] = useState(""),
     router = useRouter(),
@@ -43,61 +39,50 @@ export default function Home() {
     },
     getStorage = (nameKey) => {
       return data[nameKey];
-    };
+    }
 
-  //zustand store
-
-  const passwordText = useStore((state) => state.bar);
-  const setPasswordText = useStore((state) => state.setBar);
 
   //functionRealTime
   const connection = new HubConnectionBuilder()
-    .withUrl("http://192.168.0.35:5289/Groupnb@2024Lumping")
+    .withUrl('http://192.168.0.35:5289/Groupnb@2024Lumping')
     .withAutomaticReconnect()
-    .build();
-  const [messages, setMessage] = useState([]);
+    .build()
+  const [messages, setMessage] = useState([])
 
-  connection.on("ReceiveMessage", (user, message) => {
+  connection.on('ReceiveMessage', (user, message) => {
     const newMessages = [...messages, { user, message }];
 
-    cookies().set("login", res.data, { secure: true });
+    cookies().set('login', res.data, { secure: true })
     console.log(message);
 
     tanLogin.mutate();
   });
 
+
+
   useEffect(() => {
-    //functionRealTime
-    connection
-      .start()
+   
+      //functionRealTime
+    connection.start()
       .then(() => {
         console.log("Connection established");
       })
       .catch((err) => {
         console.error(err.toString());
-      });
-  }, []);
+      })
+  }, [])
 
-  //AES
-
-  const key = CryptoJS.enc.Utf8.parse("GroupNBEncry2024");
-  const iv = CryptoJS.enc.Utf8.parse("GroupNBEncry2024");
-
-  const encryptAES = (plainText, key, iv) => {
-    const encrypted = CryptoJS.AES.encrypt(plainText, key, { iv: iv });
-    return encrypted.toString();
-  };
 
   //functionLogin
   const tanLogin = useMutation({
     mutationFn: () =>
       globalAPI().post(`Login/login`, {
         username: username,
-        password: password,
+        password: password
       }),
     onSuccess: (res) => {
       try {
-        const encryptedText = encryptAES(JSON.stringify(res.data), key, iv);
+        const encryptedText = encryptAES(JSON.stringify(res.data));
         Cookies.set("uD", encryptedText);
         router.push("/dashboard");
         setopenbar(true);
@@ -107,39 +92,31 @@ export default function Home() {
     },
     onError: (error) => {
       console.log(error.response.data);
-    },
-  });
+    }
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    tanLogin.mutate();
+    tanLogin.mutate()
   };
-
-  //function for show password
-
-  function handleShowPasword() {
-    setPasswordText(!passwordText);
-  }
 
   return (
     <>
-      <div className="flex flex-col justify-center h-screen m-4 md:max-w-screen-sm md:m-auto lg:max-w-[500px] xl:flex-row xl:items-center xl:max-w-screen-2xl  ">
-        <div className="xl:flex rounded-md xl:items-center xl:border xl:justify-center  ">
-          <div className=" rounded-md hidden lg:flex   ">
-            <img
-              src="/images/loginGNB.png"
-              className="w-full"
-              alt="logo"
-              loading="lazy"
-            ></img>
-          </div>
-          <div className="flex flex-col gap-4 border rounded-md xl:border-none p-6 xl:p-10">
+      <div className="flex items-center justify-center h-screen xl:max-w-screen-xl m-auto">
+        <div className="flex border rounded-md">
+          <img
+            src="/images/loginGNB.png"
+            className="rounded-md"
+            alt="logo"
+            loading="lazy"
+          ></img>
+          <div className="xl:w-[30rem] xl:p-8 flex justify-center  items-center flex-col xl:gap-10 ">
             <div className="flex flex-col gap-2 items-center">
               <h1 className="font-bold">Welcome</h1>
               <p className="text-xs">Login to access your account</p>
             </div>
-            <Form.Root onSubmit={handleSubmit} className="FormRoot ">
-              <div className="flex flex-col gap-4">
+            <Form.Root onSubmit={handleSubmit} className="FormRoot">
+              <div className="flex flex-col gap-4 xl:h-[250px]">
                 <Form.Field className="grid" name="email">
                   <div className="relative">
                     <span className="px-2  text-primaryGray border-r-2 absolute top-2.5  text-pgray">
@@ -149,7 +126,7 @@ export default function Home() {
                       <Input
                         value={username}
                         onChange={(event) => setUsername(event.target.value)}
-                        className="xl:w-[300px] pl-10 text-xs "
+                        className="xl:w-[300px] xl:pl-10 text-xs "
                         type="text"
                         placeholder="Username"
                         required
@@ -175,8 +152,8 @@ export default function Home() {
                       <Input
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
-                        className="xl:w-[300px] pl-10 text-xs "
-                        type={`${passwordText == false ? "text" : "password"}`}
+                        className="xl:w-[300px] xl:pl-10 text-xs "
+                        type="password"
                         placeholder="Password"
                         required
                       />
@@ -189,10 +166,7 @@ export default function Home() {
                         Invalid Password
                       </Form.Message>
                     </div>
-                    <span
-                      onClick={handleShowPasword}
-                      className="px-2 text-xs cursor-pointer text-primaryGray hover:text-primary/90  absolute top-2.5 right-0 text-pgray"
-                    >
+                    <span className="px-2 text-xs cursor-pointer text-primaryGray hover:text-primary/90 border-r-2 absolute top-2.5 right-0 text-pgray">
                       Show
                     </span>
                   </div>
@@ -204,14 +178,7 @@ export default function Home() {
                   </p>
                 </div>
                 <Form.Submit asChild>
-                  {tanLogin.isPending ? (
-                    <Button disabled>
-                      <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                      Loading
-                    </Button>
-                  ) : (
-                    <Button>Login</Button>
-                  )}
+                  <Button className="w-full">{tanLogin.isPending ? 'Loading...' : 'Login'}</Button>
                 </Form.Submit>
               </div>
             </Form.Root>
