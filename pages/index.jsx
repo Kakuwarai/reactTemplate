@@ -9,18 +9,17 @@ import { User, Lock } from "lucide-react";
 
 
 //react state
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"; 
 import { useRouter } from 'next/navigation'
 // GlobalFunctions.js
-import { globalAPI } from "./function/globalFunctions";
+import { globalAPI, encryptAES } from "./function/globalFunctions";
 import { useQueries, useQuery, useMutation } from "@tanstack/react-query";
 //localStorage
 import useStorage from "./function/zLocalStorage";
 //RealTime
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { cookies } from "next/headers";
-//crypting
-import CryptoJS from 'crypto-js';
+
 //cookies
 import Cookies from 'js-cookie';
 
@@ -69,16 +68,6 @@ export default function Home() {
       })
   }, [])
 
-//AES
-
-const key = CryptoJS.enc.Utf8.parse('GroupNBEncry2024');
-  const iv = CryptoJS.enc.Utf8.parse('GroupNBEncry2024');
-  
-  const encryptAES = (plainText, key, iv) => {
-    const encrypted = CryptoJS.AES.encrypt(plainText, key, { iv: iv });
-    return encrypted.toString();
-  };
-
   //functionLogin
   const tanLogin = useMutation({
     mutationFn: () =>
@@ -88,7 +77,7 @@ const key = CryptoJS.enc.Utf8.parse('GroupNBEncry2024');
       }),
     onSuccess: (res) => {
       try {
-        const encryptedText = encryptAES(JSON.stringify(res.data), key, iv);
+        const encryptedText = encryptAES(JSON.stringify(res.data));
         Cookies.set('uD', encryptedText)
         router.push('/dashboard')
       } catch (error) {
