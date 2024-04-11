@@ -132,7 +132,7 @@ export default function Home() {
                         onChange={(event) => setUsername(event.target.value)}
                         className="xl:w-[300px] pl-10 text-xs "
                         type="text"
-                        placeholder="Username"
+                        placeholder="Email / Username"
                         required
                       />
                     </Form.Control>

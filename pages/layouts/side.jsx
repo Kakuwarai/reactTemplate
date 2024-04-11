@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 
 //lucide icons
 
-import { User, Lock, ChevronDown, ChevronUp } from "lucide-react";
+import { User, Lock, ChevronDown, ChevronUp  , LayoutDashboard} from "lucide-react";
 
 //zustand
 
@@ -104,7 +104,7 @@ const side = () => {
                    onClick={() => router.push('/dashboard')}
                   className={`${openbar ? "justify-center" : "justify-normal" } ${pathname === "/dashboard" ?  "bg-rose-700 text-white" : "bg-none"} flex gap-4 text-xs items-center  p-2  rounded-md cursor-pointer `}
                 >
-                  <User size={16} />
+                  <LayoutDashboard size={16} />
                   {openbar ? "" : "Dashboard"}
                 </li>
 
@@ -112,7 +112,7 @@ const side = () => {
                   onClick={() => router.push('/admindashboard')}
                   className={`flex gap-4 text-xs items-center p-2 rounded-md cursor-pointer ${ openbar ? "justify-center" : "justify-normal"}  ${pathname === "/admindashboard" ?  "bg-rose-700 text-white" : "bg-none"} `}
                 >
-                  <User size={16} />
+                  <LayoutDashboard size={16} />
 
                   {openbar ? "" : "Admin Dashboard"}
                 </li>

@@ -1,6 +1,18 @@
 "use client";
 import React, { useState } from "react";
 import Cookies from "js-cookie";
+import { useTheme } from "next-themes";
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+
+//shadcn
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 //lucide icons
 import { Menu, LogOut, BellRing, Sun, MoonStar } from "lucide-react";
@@ -8,15 +20,13 @@ import { Menu, LogOut, BellRing, Sun, MoonStar } from "lucide-react";
 import { useStore } from "@/store/store";
 
 export const header = () => {
-  const [theme, setTheme] = useState(false);
+  const { setTheme } = useTheme();
 
   const openbar = useStore((state) => state.bar);
   const setopenbar = useStore((state) => state.setBar);
 
   const [rightSideBar, setrightSideBar] = useState(false);
   const [rightSideBarNotif, setrightSideBarNotif] = useState(false);
-
-  const cookie = Cookies.get("uD");
 
   function handleBarsClick() {
     setopenbar(!openbar);
@@ -45,7 +55,7 @@ export const header = () => {
 
   return (
     <>
-      <nav className=" py-4 w-full bg-white border-b top-0 sticky ">
+      <nav className=" py-4 w-full bg-white dark:bg-slate-800 border-b top-0 sticky ">
         <div className="flex justify-between px-4">
           <div className="flex items-center gap-4">
             <button>
@@ -58,13 +68,29 @@ export const header = () => {
           </div>
           <div className="flex items-center ">
             <div className="flex items-center gap-4 px-4">
-              <div onClick={handleClickTheme}>
-                {theme ? (
-                  <Sun size={16} className="cursor-pointer" />
-                ) : (
-                  <MoonStar size={16} className="cursor-pointer" />
-                )}
-              </div>
+            <MoonStar onClick={()=> setTheme("dark")} size={16} className="cursor-pointer" />
+      
+
+              {/* <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="icon" className="text-xs">
+                    <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                    <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => setTheme("light")}>
+                    Light
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setTheme("dark")}>
+                    Dark
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setTheme("system")}>
+                    System
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu> */}
+
               <BellRing
                 onClick={handleBarsClickRightNotif}
                 className="cursor-pointer"
