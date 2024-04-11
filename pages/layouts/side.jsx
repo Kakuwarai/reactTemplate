@@ -88,7 +88,7 @@ const side = () => {
                 )}
               </TooltipTrigger>
 
-              {/* <ul
+              <ul
                 className={`flex flex-col gap-2 xl:h-[146px] ${
                   openbar ? "p-0" : "p-2"
                 }`}
@@ -117,19 +117,9 @@ const side = () => {
                   <User size={16} />
                   {openbar ? "" : "Modern"}
                 </li>
-              </ul> */}
-
-              <ul className={`flex flex-col gap-2 xl:h-[146px]  ${ openbar ? "p-0 w-12" : "p-2 w-full" }`}
-              >
-                <li
-                  className={`${
-                    openbar ? "justify-center" : "justify-normal"
-                  } flex gap-4 text-xs items-center  p-2 bg-rose-700 text-white rounded-md cursor-pointer`}
-                >
-                  <User size={16} /> {openbar ? "" : "Dashboard"}
-                </li>
-             
               </ul>
+
+            
             </div>
           </Tooltip>
 

@@ -2,11 +2,13 @@
 import React, { useState } from "react";
 
 //lucide icons
-import { Menu, LogOut, BellRing, Sun } from "lucide-react";
+import { Menu, LogOut, BellRing, Sun, MoonStar } from "lucide-react";
 
 import { useStore } from "@/store/store";
 
 export const header = () => {
+  const [theme, setTheme] = useState(false);
+
   const openbar = useStore((state) => state.bar);
   const setopenbar = useStore((state) => state.setBar);
 
@@ -21,17 +23,17 @@ export const header = () => {
     setrightSideBar(!rightSideBar);
     //false other bars
     setrightSideBarNotif(false);
-
   }
   function handleBarsClickRightNotif() {
     setrightSideBarNotif(!rightSideBarNotif);
 
     //false other bars
     setrightSideBar(false);
-  
   }
 
-
+  const handleClickTheme = () => {
+    setTheme(!theme);
+  };
 
   return (
     <>
@@ -48,10 +50,13 @@ export const header = () => {
           </div>
           <div className="flex items-center ">
             <div className="flex items-center gap-4 px-4">
-              <Sun
-                size={16}
-                className="cursor-pointer"
-              />
+              <div onClick={handleClickTheme}>
+                {theme ? (
+                  <Sun size={16} className="cursor-pointer" />
+                ) : (
+                  <Sun size={16} className="cursor-pointer" />
+                )}
+              </div>
               <BellRing
                 onClick={handleBarsClickRightNotif}
                 className="cursor-pointer"
@@ -65,8 +70,6 @@ export const header = () => {
               <h1 className="text-white">NB</h1>
             </div>
 
-      
-           
             {/* //RING LOGO CLICK */}
             <div className="relative">
               <div
