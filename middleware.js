@@ -2,39 +2,34 @@ import { NextResponse } from 'next/server'
 //cookies
 import Cookies from 'js-cookie'
 
+
 export function middleware(request) {
   const { pathname } = request.nextUrl;
-   const content =  Cookies.get("uD")
-   const cookies = decodeURIComponent(request.cookies) // Access cookies directly from request object
-    if(pathname == '/'){
+  //const cookies = decodeURIComponent(request.cookies)
+  const cookies = request.cookies.has('uD')
 
-       if(cookies != ""){
+  if (pathname == '/' && cookies) {
 
-         return NextResponse.redirect(new URL('/dashboard', request.url))
-       }
+    return NextResponse.redirect(new URL('/dashboard', request.url))
 
-    }else{
+  } else if (pathname != '/' && !cookies) {
 
-      if(cookies == ""){
-     
-         return NextResponse.redirect(new URL('/', request.url))
-        }
-    }
+    return NextResponse.redirect(new URL('/', request.url))
 
- 
-    
   }
 
-  export const config = {
-    matcher: [
-      /*
-       * Match all request paths except for the ones starting with:
-       * - api (API routes)
-       * - _next/static (static files)
-       * - _next/image (image optimization files)
-       * - favicon.ico (favicon file)
-       * - images (public images)
-       */
-      '/((?!api|_next/static|_next/image|favicon.ico|images).*)',
-    ],
-  }
+}
+
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - images (public images)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|images).*)',
+  ],
+}
