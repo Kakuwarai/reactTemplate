@@ -6,7 +6,7 @@ export const footer = () => {
 
   return (
     <>
-      <div className="p-4 text-xs mx-4 rounded-t">
+      <div className="p-4 text-xs mx-4 bg-white rounded-md shadow-sm">
         <p className="text-xs ">{`© ${currentYear} Group NB. All Rights Reserved.`}</p>
       </div>
     </>

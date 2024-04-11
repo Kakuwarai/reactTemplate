@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 
 // lucide
 
-import { User, Lock } from "lucide-react";
+import { User, Lock, TicketX } from "lucide-react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 
 //react state
@@ -15,9 +15,8 @@ import { useRouter } from "next/navigation";
 // GlobalFunctions.js
 import { globalAPI, encryptAES } from "./function/globalFunctions";
 import { useQueries, useQuery, useMutation } from "@tanstack/react-query";
-//localStorage
-import useStorage from "./function/zLocalStorage";
-//RealTime
+
+//Real Time
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { cookies } from "next/headers";
 
@@ -32,9 +31,9 @@ import Cookies from "js-cookie";
 import { useStore } from "@/store/store";
 
 export default function Home() {
-
   const passwordText = useStore((state) => state.bar);
   const setPasswordText = useStore((state) => state.setBar);
+  const [errorMessage, setErrorMessage] = useState("");
   const [username, setUsername] = useState(""),
     [password, setPassword] = useState(""),
     router = useRouter(),
@@ -45,8 +44,6 @@ export default function Home() {
     getStorage = (nameKey) => {
       return data[nameKey];
     };
-
-
 
   //functionRealTime
   const connection = new HubConnectionBuilder()
@@ -76,11 +73,11 @@ export default function Home() {
       });
   }, []);
 
-    //function for show password
+  //function for show password
 
-    function handleShowPasword() {
-      setPasswordText(!passwordText);
-    }
+  function handleShowPasword() {
+    setPasswordText(!passwordText);
+  }
 
   //functionLogin
   const tanLogin = useMutation({
@@ -90,17 +87,13 @@ export default function Home() {
         password: password,
       }),
     onSuccess: (res) => {
-      try {
-        const encryptedText = encryptAES(JSON.stringify(res.data));
-        Cookies.set("uD", encryptedText);
-        router.push("/dashboard");
-        setopenbar(true);
-      } catch (error) {
-        console.log(error);
-      }
+      const encryptedText = encryptAES(JSON.stringify(res.data));
+      Cookies.set("uD", encryptedText);
+      router.push("/dashboard");
+      setopenbar(true);
     },
     onError: (error) => {
-      console.log(error.response.data);
+      setErrorMessage(error.response.data);
     },
   });
 
@@ -201,6 +194,17 @@ export default function Home() {
                     <Button>Login</Button>
                   )}
                 </Form.Submit>
+
+                {errorMessage && (
+                  <>
+                    <div className="flex items-center justify-center gap-2  text-rose-500 ">
+                      <h1 className="text-xs text-center pb-0.5">
+                        {errorMessage}
+                      </h1>
+                      <TicketX size={16} className="" />
+                    </div>
+                  </>
+                )}
               </div>
             </Form.Root>
           </div>

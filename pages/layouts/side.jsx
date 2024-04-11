@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-
+import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 //shadcn
 
 import {
@@ -23,6 +25,9 @@ import { useStore } from "@/store/store";
 import useWindowDimensions from "../function/WindowDimension";
 
 const side = () => {
+  const router = useRouter();
+
+  const pathname = usePathname();
   const [openSide, setOpenSide] = useState(false);
   const openbar = useStore((state) => state.bar);
   const setopenbar = useStore((state) => state.setBar);
@@ -39,6 +44,8 @@ const side = () => {
   //     setopenbar(!openbar);
   //   }
   // }, []);
+
+  
 
   return (
     <TooltipProvider>
@@ -94,19 +101,19 @@ const side = () => {
                 }`}
               >
                 <li
-                  className={`${
-                    openbar ? "justify-center" : "justify-normal"
-                  } flex gap-4 text-xs items-center  p-2 bg-rose-700 text-white rounded-md cursor-pointer`}
+                   onClick={() => router.push('/dashboard')}
+                  className={`${openbar ? "justify-center" : "justify-normal" } ${pathname === "/dashboard" ?  "bg-rose-700 text-white" : "bg-none"} flex gap-4 text-xs items-center  p-2  rounded-md cursor-pointer `}
                 >
                   <User size={16} />
                   {openbar ? "" : "Dashboard"}
                 </li>
+
                 <li
-                  className={`flex gap-4 text-xs items-center  p-2 ${
-                    openbar ? "justify-center" : "justify-normal"
-                  }  `}
+                  onClick={() => router.push('/admindashboard')}
+                  className={`flex gap-4 text-xs items-center p-2 rounded-md cursor-pointer ${ openbar ? "justify-center" : "justify-normal"}  ${pathname === "/admindashboard" ?  "bg-rose-700 text-white" : "bg-none"} `}
                 >
                   <User size={16} />
+
                   {openbar ? "" : "Admin Dashboard"}
                 </li>
                 <li
@@ -118,8 +125,6 @@ const side = () => {
                   {openbar ? "" : "Modern"}
                 </li>
               </ul>
-
-            
             </div>
           </Tooltip>
 
@@ -127,9 +132,11 @@ const side = () => {
 
           <Tooltip disableHoverableContent="false">
             <div className="flex flex-col gap-2">
-              <TooltipTrigger  className={`flex items-start justify-start ${
+              <TooltipTrigger
+                className={`flex items-start justify-start ${
                   openbar ? "cursor-pointer" : "cursor-default"
-                }`}>
+                }`}
+              >
                 <h1 className="text-sm font-bold">
                   {openbar ? "..." : "Reports"}
                 </h1>

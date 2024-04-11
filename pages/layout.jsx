@@ -13,13 +13,15 @@ export default function Layout({ children }) {
         <Sidebar />
         <div className={` ${openbar ? "ml-0 lg:ml-[80px]" : "lg:ml-[300px]"}`}>
           <Header />
-          <div className="">
+          <div className="bg-gray-50  h-[calc(100vh-73px)]">
             <div className="">{children}</div>
-            <div className="bg-gray-50 border-t">
+            <div className="bg-gray-50 ">
               <Footer />
             </div>
           </div>
         </div>
+
+        {/* h-[calc(100vh-73px)] */}
       </main>
     </>
   );

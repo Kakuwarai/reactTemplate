@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Cookies from "js-cookie";
 
 //lucide icons
 import { Menu, LogOut, BellRing, Sun, MoonStar } from "lucide-react";
@@ -14,6 +15,8 @@ export const header = () => {
 
   const [rightSideBar, setrightSideBar] = useState(false);
   const [rightSideBarNotif, setrightSideBarNotif] = useState(false);
+
+  const cookie = Cookies.get("uD");
 
   function handleBarsClick() {
     setopenbar(!openbar);
@@ -31,9 +34,14 @@ export const header = () => {
     setrightSideBar(false);
   }
 
-  const handleClickTheme = () => {
+  function handleClickTheme() {
     setTheme(!theme);
-  };
+  }
+
+  function logoutUser() {
+    Cookies.remove("uD");
+    location.reload();
+  }
 
   return (
     <>
@@ -54,7 +62,7 @@ export const header = () => {
                 {theme ? (
                   <Sun size={16} className="cursor-pointer" />
                 ) : (
-                  <Sun size={16} className="cursor-pointer" />
+                  <MoonStar size={16} className="cursor-pointer" />
                 )}
               </div>
               <BellRing
@@ -63,12 +71,12 @@ export const header = () => {
                 size={16}
               />
             </div>
-            <div
-              className="bg-primary  rounded-full p-2 flex items-center justify-center  cursor-pointer "
+            <button
+              className="bg-primary  text-white rounded-full p-2 flex items-center justify-center  cursor-pointer "
               onClick={handleBarsClickRight}
             >
-              <h1 className="text-white">NB</h1>
-            </div>
+              NB
+            </button>
 
             {/* //RING LOGO CLICK */}
             <div className="relative">
@@ -109,6 +117,7 @@ export const header = () => {
                   <h1 className="text-xs font-semibold">Nathalie Babinaeu</h1>
                 </div>
                 <div
+                  onClick={logoutUser}
                   className={`${
                     rightSideBar ? "flex" : "hidden"
                   } p-4 w-full  bg-gray-50 hover:bg-gray-100 items-center justify-center border-t cursor-pointer gap-4 group`}
