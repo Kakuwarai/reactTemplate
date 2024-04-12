@@ -31,6 +31,7 @@ import Cookies from "js-cookie";
 import { useStore } from "@/store/store";
 
 export default function Home() {
+  const [connectionmsg, setConnectionmsg] = useState("");
   const passwordText = useStore((state) => state.bar);
   const setPasswordText = useStore((state) => state.setBar);
   const [errorMessage, setErrorMessage] = useState("");
@@ -63,15 +64,19 @@ export default function Home() {
 
   useEffect(() => {
     //functionRealTime
+    connectionStart();
+  }, []);
+
+  function connectionStart() {
     connection
       .start()
       .then(() => {
         console.log("Connection established");
       })
       .catch((err) => {
-        console.error(err.toString());
+        setConnectionmsg(err.message);
       });
-  }, []);
+  }
 
   //function for show password
 
@@ -122,7 +127,7 @@ export default function Home() {
             <Form.Root onSubmit={handleSubmit} className="FormRoot">
               <div className="flex flex-col gap-4 xl:h-[250px]">
                 <Form.Field className="grid" name="email">
-                  <div className="relative">
+                  <div className="relative ">
                     <span className="px-2  text-primaryGray border-r-2 absolute top-2.5  text-pgray">
                       <User size={16} />
                     </span>
@@ -195,11 +200,20 @@ export default function Home() {
                   )}
                 </Form.Submit>
 
+                {connectionmsg && (
+                  <>
+                    <div className="w-[300px] m-auto   text-rose-500 ">
+                      <h1 className="text-xs ">{connectionmsg}</h1>
+                    </div>
+                  </>
+                )}
+
                 {errorMessage && (
                   <>
                     <div className="flex items-center justify-center gap-2  text-rose-500 ">
                       <h1 className="text-xs text-center pb-0.5">
                         {errorMessage}
+                        {connectionmsg}
                       </h1>
                       <TicketX size={16} className="" />
                     </div>

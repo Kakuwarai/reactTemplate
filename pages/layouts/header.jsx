@@ -1,8 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useTheme } from "next-themes";
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 
 //shadcn
 
@@ -20,7 +19,9 @@ import { Menu, LogOut, BellRing, Sun, MoonStar } from "lucide-react";
 import { useStore } from "@/store/store";
 
 export const header = () => {
+  const [themeLs, setThemeLs] = useState("");
   const { setTheme } = useTheme();
+  const [themeMode, setThemeMode] = useState(false);
 
   const openbar = useStore((state) => state.bar);
   const setopenbar = useStore((state) => state.setBar);
@@ -45,12 +46,21 @@ export const header = () => {
   }
 
   function handleClickTheme() {
-    setTheme(!theme);
+    //setThemeMode(!themeMode);
   }
 
   function logoutUser() {
     Cookies.remove("uD");
     location.reload();
+  }
+
+  useEffect(() => {
+    getLocalThemeStorage();
+  }, []);
+
+  function getLocalThemeStorage() {
+    const getTheme = localStorage.getItem("theme");
+    setThemeLs(getTheme);
   }
 
   return (
@@ -68,28 +78,21 @@ export const header = () => {
           </div>
           <div className="flex items-center ">
             <div className="flex items-center gap-4 px-4">
-            <MoonStar onClick={()=> setTheme("dark")} size={16} className="cursor-pointer" />
-      
-
-              {/* <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="icon" className="text-xs">
-                    <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                    <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => setTheme("light")}>
-                    Light
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setTheme("dark")}>
-                    Dark
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setTheme("system")}>
-                    System
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu> */}
+              <div onClick={handleClickTheme}>
+                {themeLs == "light" && themeMode == false ? (
+                  <MoonStar
+                    size={16}
+                    className="cursor-pointer"
+                    onClick={() => {setTheme("dark"), setThemeMode(false)}}
+                  />
+                ) : (
+                  <Sun
+                    size={16}
+                    className="cursor-pointer"
+                    onClick={() => {setTheme("light"), setThemeMode(true)}}
+                  />
+                )}
+              </div>
 
               <BellRing
                 onClick={handleBarsClickRightNotif}
