@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Cookies from "js-cookie";
 import { useTheme } from "next-themes";
 
@@ -21,7 +21,6 @@ import { useStore } from "@/store/store";
 export const header = () => {
   const [themeLs, setThemeLs] = useState("");
   const { setTheme } = useTheme();
-  const [themeMode, setThemeMode] = useState(false);
 
   const openbar = useStore((state) => state.bar);
   const setopenbar = useStore((state) => state.setBar);
@@ -46,26 +45,30 @@ export const header = () => {
   }
 
   function handleClickTheme() {
-    //setThemeMode(!themeMode);
+    if (themeLs == "light") {
+      setTheme("dark");
+      setThemeLs("dark");
+    } else {
+      setTheme("light");
+      setThemeLs("light");
+    }
   }
+
+  useEffect(() => {
+    const x = localStorage.getItem("theme");
+    if (x != null) {
+      setThemeLs(x);
+    }
+  }, []);
 
   function logoutUser() {
     Cookies.remove("uD");
     location.reload();
   }
 
-  useEffect(() => {
-    getLocalThemeStorage();
-  }, []);
-
-  function getLocalThemeStorage() {
-    const getTheme = localStorage.getItem("theme");
-    setThemeLs(getTheme);
-  }
-
   return (
     <>
-      <nav className=" py-4 w-full bg-white dark:bg-slate-800 border-b top-0 sticky ">
+      <nav className=" py-4 w-full bg-white dark:bg-slate-950 border-b top-0 sticky ">
         <div className="flex justify-between px-4">
           <div className="flex items-center gap-4">
             <button>
@@ -79,18 +82,10 @@ export const header = () => {
           <div className="flex items-center ">
             <div className="flex items-center gap-4 px-4">
               <div onClick={handleClickTheme}>
-                {themeLs == "light" && themeMode == false ? (
-                  <MoonStar
-                    size={16}
-                    className="cursor-pointer"
-                    onClick={() => {setTheme("dark"), setThemeMode(false)}}
-                  />
+                {themeLs == "light" ? (
+                  <MoonStar size={16} className="cursor-pointer" />
                 ) : (
-                  <Sun
-                    size={16}
-                    className="cursor-pointer"
-                    onClick={() => {setTheme("light"), setThemeMode(true)}}
-                  />
+                  <Sun size={16} className="cursor-pointer" />
                 )}
               </div>
 
@@ -112,7 +107,7 @@ export const header = () => {
               <div
                 className={`${
                   rightSideBarNotif ? "h-[200px]" : "h-[0]"
-                } transition-all absolute cursor-default bg-white w-[200px] right-0  top-[2.23rem] border-t  rounded-md shadow-md flex flex-col justify-between z-50 `}
+                } transition-all absolute cursor-default bg-white w-[200px] right-0  top-[2.23rem]  rounded-md shadow-md flex flex-col justify-between z-50 `}
               >
                 <div
                   className={`${
@@ -124,19 +119,18 @@ export const header = () => {
                 <div
                   className={`${
                     rightSideBarNotif ? "flex" : "hidden"
-                  } p-4 w-full  bg-gray-50 hover:bg-gray-100 items-center justify-center border-t cursor-pointer gap-4 group`}
+                  } p-4 w-full  bg-gray-50 hover:bg-gray-100 items-center justify-center  cursor-pointer gap-4 group`}
                 >
                   <LogOut size={16} className="group-hover:text-rose-700" />
                   <h1 className="text-xs">Logout</h1>
                 </div>
               </div>
-            </div>
-            {/* //NB LOGO CLICK */}
+            </div>                            {/* //NB LOGO CLICK */}
             <div className="relative">
               <div
                 className={`${
                   rightSideBar ? "h-[200px]" : "h-[0]"
-                } transition-all absolute cursor-default bg-white w-[200px] right-0  top-[2.23rem] border-t  rounded-md shadow-md flex flex-col justify-between z-50 `}
+                } transition-all absolute cursor-default bg-white w-[200px] right-0  top-[2.23rem]   rounded-md shadow-md flex flex-col justify-between z-50 `}
               >
                 <div
                   className={`${
@@ -149,7 +143,7 @@ export const header = () => {
                   onClick={logoutUser}
                   className={`${
                     rightSideBar ? "flex" : "hidden"
-                  } p-4 w-full  bg-gray-50 hover:bg-gray-100 items-center justify-center border-t cursor-pointer gap-4 group`}
+                  } p-4 w-full  bg-gray-50 hover:bg-gray-100 items-center justify-center  cursor-pointer gap-4 group`}
                 >
                   <LogOut size={16} className="group-hover:text-rose-700" />
                   <h1 className="text-xs">Logout</h1>

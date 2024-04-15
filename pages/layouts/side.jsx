@@ -16,7 +16,13 @@ import { Button } from "@/components/ui/button";
 
 //lucide icons
 
-import { User, Lock, ChevronDown, ChevronUp  , LayoutDashboard} from "lucide-react";
+import {
+  User,
+  Lock,
+  ChevronDown,
+  ChevronUp,
+  LayoutDashboard,
+} from "lucide-react";
 
 //zustand
 
@@ -45,8 +51,6 @@ const side = () => {
   //   }
   // }, []);
 
-  
-
   return (
     <TooltipProvider>
       <aside
@@ -54,7 +58,7 @@ const side = () => {
           openbar
             ? "w-[80px] hidden lg:block opacity-100  "
             : "block w-[300px] "
-        } fixed    transition-all border-r border-b h-screen bg-white text-primary `}
+        } fixed   transition-all border-r border-b h-screen bg-white dark:bg-slate-950 text-primary `}
       >
         <div
           className={`p-[0.9rem] flex items-center  justify-center ${
@@ -87,7 +91,7 @@ const side = () => {
                   {openbar ? "..." : "Home"}
                 </h1>
                 {openbar ? (
-                  <TooltipContent asChild>
+                  <TooltipContent side="left" asChild>
                     <p>Home</p>
                   </TooltipContent>
                 ) : (
@@ -100,22 +104,56 @@ const side = () => {
                   openbar ? "p-0" : "p-2"
                 }`}
               >
-                <li
-                   onClick={() => router.push('/dashboard')}
-                  className={`${openbar ? "justify-center" : "justify-normal" } ${pathname === "/dashboard" ?  "bg-rose-700 text-white" : "bg-none"} flex gap-4 text-xs items-center  p-2  rounded-md cursor-pointer `}
-                >
-                  <LayoutDashboard size={16} />
-                  {openbar ? "" : "Dashboard"}
-                </li>
+                <Tooltip disableHoverableContent="false">
+                  <TooltipTrigger>
+                    <li
+                      onClick={() => router.push("/dashboard")}
+                      className={`${
+                        openbar ? "justify-center" : "justify-normal"
+                      } ${
+                        pathname === "/dashboard"
+                          ? "bg-rose-700 text-white"
+                          : "bg-none"
+                      } flex gap-4 text-xs items-center  p-2  rounded-md cursor-pointer `}
+                    >
+                      <LayoutDashboard size={16} />
+                      {openbar ? "" : "Dashboard"}
+                    </li>
+                    {openbar ? (
+                      <TooltipContent side="left" asChild>
+                        <p>Dashboard</p>
+                      </TooltipContent>
+                    ) : (
+                      ""
+                    )}
+                  </TooltipTrigger>
+                </Tooltip>
 
-                <li
-                  onClick={() => router.push('/admindashboard')}
-                  className={`flex gap-4 text-xs items-center p-2 rounded-md cursor-pointer ${ openbar ? "justify-center" : "justify-normal"}  ${pathname === "/admindashboard" ?  "bg-rose-700 text-white" : "bg-none"} `}
-                >
-                  <LayoutDashboard size={16} />
+                <Tooltip disableHoverableContent="false">
+                  <TooltipTrigger>
+                    <li
+                      onClick={() => router.push("/admindashboard")}
+                      className={`${
+                        openbar ? "justify-center" : "justify-normal"
+                      } ${
+                        pathname === "/admindashboard"
+                          ? "bg-rose-700 text-white"
+                          : "bg-none"
+                      } flex gap-4 text-xs items-center  p-2  rounded-md cursor-pointer `}
+                    >
+                      <LayoutDashboard size={16} />
+                      {openbar ? "" : "Admin Dashboard"}
+                    </li>
+                    {openbar ? (
+                      <TooltipContent side="left" asChild>
+                        <p>Admin Dashboard</p>
+                      </TooltipContent>
+                    ) : (
+                      ""
+                    )}
+                  </TooltipTrigger>
+                </Tooltip>
 
-                  {openbar ? "" : "Admin Dashboard"}
-                </li>
                 <li
                   className={`flex gap-4 text-xs items-center  p-2 ${
                     openbar ? "justify-center" : "justify-normal"
@@ -141,7 +179,7 @@ const side = () => {
                   {openbar ? "..." : "Reports"}
                 </h1>
                 {openbar ? (
-                  <TooltipContent asChild>
+                  <TooltipContent side="left" asChild>
                     <p>Home</p>
                   </TooltipContent>
                 ) : (
@@ -168,7 +206,7 @@ const side = () => {
                   />
                 </div>
                 <div
-                  className={`bg-slate-100 rounded-sm transition-all ease-in-out ${
+                  className={`bg-slate-100 rounded-sm transition-all ease-in-out dark:bg-slate-950 ${
                     openSide
                       ? "h-[80px] opacity-100 gap-2 flex flex-col"
                       : "h-0 gap-0  "

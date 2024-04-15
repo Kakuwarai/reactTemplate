@@ -21,7 +21,7 @@ export default function Layout({ children }) {
             className={` ${openbar ? "ml-0 lg:ml-[80px]" : "lg:ml-[300px]"}`}
           >
             <Header />
-            <div className="bg-gray-50  h-[calc(100vh-73px)]">
+            <div className="bg-gray-50  h-[calc(100vh-73px)] dark:bg-slate-950">
               <div className="">{children}</div>
               <div className="bg-gray-50 ">
                 <Footer />
