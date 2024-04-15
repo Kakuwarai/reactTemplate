@@ -179,7 +179,8 @@ export default function Home() {
                       onClick={handleShowPasword}
                       className="px-2 text-xs cursor-pointer text-primaryGray hover:text-primary/90  absolute top-2.5 right-0 text-pgray"
                     >
-                      Show
+                    {passwordText === false ? "Hide" : "Show"}
+                    
                     </span>
                   </div>
                 </Form.Field>
