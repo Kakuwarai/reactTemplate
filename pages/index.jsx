@@ -74,7 +74,7 @@ export default function Home() {
         console.log("Connection established");
       })
       .catch((err) => {
-        setConnectionmsg(err.message);
+        // setConnectionmsg(err.message);
       });
   }
 
@@ -87,10 +87,14 @@ export default function Home() {
   //functionLogin
   const tanLogin = useMutation({
     mutationFn: () =>
-      globalAPI().post(`Login/login`, {
-        username: username,
-        password: password,
-      }),
+      globalAPI()
+        .post(`Login/login`, {
+          username: username,
+          password: password,
+        })
+        .catch((err) => {
+          setConnectionmsg(err.message);
+        }),
     onSuccess: (res) => {
       const encryptedText = encryptAES(JSON.stringify(res.data));
       Cookies.set("uD", encryptedText);
@@ -203,7 +207,7 @@ export default function Home() {
 
                 {connectionmsg && (
                   <>
-                    <div className="w-[300px] m-auto   text-rose-500 ">
+                    <div className="text-xs flex items-center justify-center text-rose-500">
                       <h1 className="text-xs ">{connectionmsg}</h1>
                     </div>
                   </>
@@ -214,7 +218,6 @@ export default function Home() {
                     <div className="flex items-center justify-center gap-2  text-rose-500 ">
                       <h1 className="text-xs text-center pb-0.5">
                         {errorMessage}
-                        {connectionmsg}
                       </h1>
                       <TicketX size={16} className="" />
                     </div>
