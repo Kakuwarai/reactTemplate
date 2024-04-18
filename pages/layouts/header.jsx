@@ -31,7 +31,6 @@ export const header = () => {
   const ref = useRef();
   const ref1 = useRef();
   const ref2 = useRef();
-  const ref3 = useRef();
 
   function handleBarsClick() {
     setopenbar(!openbar);
@@ -89,16 +88,20 @@ export const header = () => {
     };
   }, [ref, ref1, ref2]);
 
+  function asdasdas(e) {
+    e.stopPropagation();
+  }
+
   return (
     <>
       <nav
-        onClick={(e)=>e.preventDefault()}
+        onClick={asdasdas}
         className=" py-4 w-full bg-white dark:bg-slate-950 border-b top-0 sticky "
       >
         <div className="flex justify-between px-4">
           <div className="flex items-center gap-4">
             <button onClick={handleBarsClick} id="oButton">
-              <Menu  className="text-pgray" />
+              <Menu className="text-pgray" />
             </button>
             <div className=" gap-2 items-center text-xs hidden md:flex ">
               <h1 className="">Welcome,</h1>
