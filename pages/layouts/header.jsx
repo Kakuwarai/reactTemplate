@@ -26,7 +26,11 @@ export const header = () => {
   const setopenbar = useStore((state) => state.setBar);
 
   const [rightSideBar, setrightSideBar] = useState(false);
-  const [rightSideBarNotif, setrightSideBarNotif] = useState(false);
+  const [rightSideBarNotif, setrightSideBarNotif] = useState(true);
+
+  const ref = useRef();
+  const ref1 = useRef();
+  const ref2 = useRef();
 
   function handleBarsClick() {
     setopenbar(!openbar);
@@ -66,12 +70,33 @@ export const header = () => {
     location.reload();
   }
 
+  useEffect(() => {
+    const handleOutSideClick = (event) => {
+      if (
+        !ref.current?.contains(event.target) &&
+        !ref1.current?.contains(event.target) &&
+        !ref2.current?.contains(event.target)
+      ) {
+        setrightSideBar(false);
+        setrightSideBarNotif(false);
+      }
+    };
+
+    window.addEventListener("mousedown", handleOutSideClick);
+    return () => {
+      window.removeEventListener("mousedown", handleOutSideClick);
+    };
+  }, [ref, ref1, ref2]);
+
   return (
     <>
-      <nav className=" py-4 w-full bg-white dark:bg-slate-950 border-b top-0 sticky ">
+      <nav
+        onClick={(e) => e.stopPropagation()}
+        className=" py-4 w-full bg-white dark:bg-slate-950 border-b top-0 sticky "
+      >
         <div className="flex justify-between px-4">
           <div className="flex items-center gap-4">
-            <button>
+            <button id="oButton">
               <Menu onClick={handleBarsClick} className="text-pgray" />
             </button>
             <div className=" gap-2 items-center text-xs hidden md:flex ">
@@ -79,11 +104,11 @@ export const header = () => {
               <p className="text-xs font-semibold ">Nathalie Babinaeu</p>
             </div>
           </div>
-          <div className="flex items-center ">
+          <div ref={ref2} className="flex items-center ">
             <div className="flex items-center gap-4 px-4">
               <div onClick={handleClickTheme}>
                 {themeLs == "light" ? (
-                  <MoonStar size={16} className="cursor-pointer" />
+                  <MoonStar size={16} className="cursor-pointer  " />
                 ) : (
                   <Sun size={16} className="cursor-pointer" />
                 )}
@@ -101,13 +126,13 @@ export const header = () => {
             >
               NB
             </button>
-
             {/* //RING LOGO CLICK */}
             <div className="relative">
               <div
+                ref={ref1}
                 className={`${
-                  rightSideBarNotif ? "h-[200px]" : "h-[0]"
-                } transition-all absolute cursor-default bg-white w-[200px] right-0  top-[2.23rem]  rounded-md shadow-md flex flex-col justify-between z-50 `}
+                  rightSideBarNotif ? "h-[440px] lg:h-[410px]" : "h-[0]"
+                } transition-all ease-in-out absolute cursor-default bg-white w-[250px] right-0  top-[2.23rem]  rounded-md shadow-md flex flex-col z-50 lg:w-[350px] `}
               >
                 <div
                   className={`${
@@ -116,18 +141,112 @@ export const header = () => {
                 >
                   <h1 className="text-xs font-semibold">Notification</h1>
                 </div>
+
+                <div className="pt-4 px-4 cursor-pointer space-y-2">
+                  <div
+                    className={`${
+                      rightSideBarNotif ? "flex flex-col gap-1.5 " : "hidden"
+                    }`}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className=" w-12  bg-gray-50">
+                        <img
+                          src="https://ui.shadcn.com/avatars/01.png"
+                          loading="lazy"
+                          alt="icon-picture"
+                        />
+                      </div>
+                      <div className="flex flex-col w-full">
+                        <div className="w-full ">
+                          <p className="text-xs text-primary font-medium">
+                            GroupNB
+                          </p>
+                          <p className="text-xs text-pgray">
+                            groupnb123@gmail.com
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-xs text-ellipsis overflow-hidden ...">
+                      The longest word in any of the major English language
+                      dictionaries is pneumonoultramicroscopicsilicovolcan
+                    </p>
+                    <hr className="mt-2" />
+                  </div>
+                  <div
+                    className={`${
+                      rightSideBarNotif ? "flex flex-col gap-1.5 " : "hidden"
+                    }`}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className=" w-12  bg-gray-50">
+                        <img
+                          src="https://ui.shadcn.com/avatars/01.png"
+                          loading="lazy"
+                          alt="icon-picture"
+                        />
+                      </div>
+                      <div className="flex flex-col w-full">
+                        <div className="w-full ">
+                          <p className="text-xs text-primary font-medium">
+                            GroupNB
+                          </p>
+                          <p className="text-xs text-pgray">
+                            groupnb123@gmail.com
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-xs text-ellipsis overflow-hidden ...">
+                      The longest word in any of the major English language
+                      dictionaries is pneumonoultramicroscopicsilicovolcan
+                    </p>
+                    <hr className="mt-2" />
+                  </div>
+                  <div
+                    className={`${
+                      rightSideBarNotif ? "flex flex-col gap-1.5 " : "hidden"
+                    }`}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className=" w-12  bg-gray-50">
+                        <img
+                          src="https://ui.shadcn.com/avatars/01.png"
+                          loading="lazy"
+                          alt="icon-picture"
+                        />
+                      </div>
+                      <div className="flex flex-col w-full">
+                        <div className="w-full ">
+                          <p className="text-xs text-primary font-medium">
+                            GroupNB
+                          </p>
+                          <p className="text-xs text-pgray">
+                            groupnb123@gmail.com
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-xs text-ellipsis overflow-hidden ...">
+                      The longest word in any of the major English language
+                      dictionaries is pneumonoultramicroscopicsilicovolcan
+                    </p>
+                    <hr className="mt-2" />
+                  </div>
+                </div>
                 <div
                   className={`${
                     rightSideBarNotif ? "flex" : "hidden"
                   } p-4 w-full  bg-gray-50 hover:bg-gray-100 items-center justify-center  cursor-pointer gap-4 group`}
                 >
-                  <LogOut size={16} className="group-hover:text-rose-700" />
-                  <h1 className="text-xs">Logout</h1>
+                  <h1 className="text-xs">View All</h1>
                 </div>
               </div>
-            </div>                            {/* //NB LOGO CLICK */}
+            </div>
+            {/* //NB LOGO CLICK */}
             <div className="relative">
               <div
+                ref={ref}
                 className={`${
                   rightSideBar ? "h-[200px]" : "h-[0]"
                 } transition-all absolute cursor-default bg-white w-[200px] right-0  top-[2.23rem]   rounded-md shadow-md flex flex-col justify-between z-50 `}
