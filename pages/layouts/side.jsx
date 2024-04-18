@@ -32,7 +32,6 @@ import useWindowDimensions from "../function/WindowDimension";
 
 const side = () => {
   const router = useRouter();
-  const ref = useRef(null);
   const pathname = usePathname();
   const [openSide, setOpenSide] = useState(false);
   const openbar = useStore((state) => state.bar);
@@ -50,7 +49,6 @@ const side = () => {
   //     setopenbar(!openbar);
   //   }
   // }, []);
-
 
   return (
     <TooltipProvider>
@@ -78,7 +76,7 @@ const side = () => {
           </h1>
         </div>
 
-        <div ref={ref} className={`py-10 px-4 h-screen flex flex-col gap-4`}>
+        <div className={`py-10 px-4 h-screen flex flex-col gap-4`}>
           {/* //Dashboard */}
 
           <Tooltip disableHoverableContent="false">
@@ -251,7 +249,12 @@ const side = () => {
           </Tooltip>
         </div>
       </aside>
-      <div onClick={()=> setopenbar(!openbar)} className={`${openbar == true ? "backdrop-blur-none": "backdrop-blur-sm"} lg:pointer-events-none lg:backdrop-blur-none absolute left-[300px] bottom-0 right-0 top-0 `}/>
+      <div
+        onClick={() => setopenbar(!openbar)}
+        className={`${
+          openbar == true ? "backdrop-blur-none" : "backdrop-blur-sm"
+        } lg:pointer-events-none lg:backdrop-blur-none absolute left-[300px] bottom-0 right-0 top-0 `}
+      />
     </TooltipProvider>
   );
 };

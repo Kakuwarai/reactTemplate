@@ -135,7 +135,7 @@ export const header = () => {
               <div
                 ref={ref1}
                 className={`${
-                  rightSideBarNotif ? "h-[440px] lg:h-[410px]" : "h-[0]"
+                  rightSideBarNotif ? "h-[440px] lg:h-[420px]" : "h-[0]"
                 } transition-all ease-in-out absolute cursor-default bg-white w-[250px] right-0  top-[2.23rem]  rounded-md shadow-md flex flex-col z-50 lg:w-[350px] `}
               >
                 <div
@@ -171,73 +171,96 @@ export const header = () => {
                         </div>
                       </div>
                     </div>
-                    <p className="text-xs text-ellipsis overflow-hidden ...">
-                      The longest word in any of the major English language
-                      dictionaries is pneumonoultramicroscopicsilicovolcan
-                    </p>
-                    <hr className="mt-2" />
-                  </div>
-                  <div
-                    className={`${
-                      rightSideBarNotif ? "flex flex-col gap-1.5 " : "hidden"
-                    }`}
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div className=" w-12  bg-gray-50">
-                        <img
-                          src="https://ui.shadcn.com/avatars/01.png"
-                          loading="lazy"
-                          alt="icon-picture"
-                        />
-                      </div>
-                      <div className="flex flex-col w-full">
-                        <div className="w-full ">
-                          <p className="text-xs text-primary font-medium">
-                            GroupNB
-                          </p>
-                          <p className="text-xs text-pgray">
-                            groupnb123@gmail.com
-                          </p>
-                        </div>
+
+                    <div className="flex w-full">
+                      <div className="line-clamp-2">
+                        <p className="text-xs">
+                          Lorem, ipsum dolor sit amet consectetur adipisicing
+                          elit. Rerum beatae quam iusto assumenda harum
+                          doloremque fugit incidunt, laborum maxime tempora.
+                        </p>
                       </div>
                     </div>
-                    <p className="text-xs text-ellipsis overflow-hidden ...">
-                      The longest word in any of the major English language
-                      dictionaries is pneumonoultramicroscopicsilicovolcan
-                    </p>
-                    <hr className="mt-2" />
-                  </div>
-                  <div
-                    className={`${
-                      rightSideBarNotif ? "flex flex-col gap-1.5 " : "hidden"
-                    }`}
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div className=" w-12  bg-gray-50">
-                        <img
-                          src="https://ui.shadcn.com/avatars/01.png"
-                          loading="lazy"
-                          alt="icon-picture"
-                        />
-                      </div>
-                      <div className="flex flex-col w-full">
-                        <div className="w-full ">
-                          <p className="text-xs text-primary font-medium">
-                            GroupNB
-                          </p>
-                          <p className="text-xs text-pgray">
-                            groupnb123@gmail.com
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <p className="text-xs text-ellipsis overflow-hidden ...">
-                      The longest word in any of the major English language
-                      dictionaries is pneumonoultramicroscopicsilicovolcan
-                    </p>
                     <hr className="mt-2" />
                   </div>
                 </div>
+                <div className="pt-4 px-4 cursor-pointer space-y-2">
+                  <div
+                    className={`${
+                      rightSideBarNotif ? "flex flex-col gap-1.5 " : "hidden"
+                    }`}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className=" w-12  bg-gray-50">
+                        <img
+                          src="https://ui.shadcn.com/avatars/01.png"
+                          loading="lazy"
+                          alt="icon-picture"
+                        />
+                      </div>
+                      <div className="flex flex-col w-full">
+                        <div className="w-full ">
+                          <p className="text-xs text-primary font-medium">
+                            GroupNB
+                          </p>
+                          <p className="text-xs text-pgray">
+                            groupnb123@gmail.com
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex w-full">
+                      <div className="line-clamp-2">
+                        <p className="text-xs">
+                          Lorem, ipsum dolor sit amet consectetur adipisicing
+                          elit. Rerum beatae quam iusto assumenda harum
+                          doloremque fugit incidunt, laborum maxime tempora.
+                        </p>
+                      </div>
+                    </div>
+                    <hr className="mt-2" />
+                  </div>
+                </div>
+                <div className="pt-4 px-4 cursor-pointer space-y-2">
+                  <div
+                    className={`${
+                      rightSideBarNotif ? "flex flex-col gap-1.5 " : "hidden"
+                    }`}
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className=" w-12  bg-gray-50">
+                        <img
+                          src="https://ui.shadcn.com/avatars/01.png"
+                          loading="lazy"
+                          alt="icon-picture"
+                        />
+                      </div>
+                      <div className="flex flex-col w-full">
+                        <div className="w-full ">
+                          <p className="text-xs text-primary font-medium">
+                            GroupNB
+                          </p>
+                          <p className="text-xs text-pgray">
+                            groupnb123@gmail.com
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex w-full">
+                      <div className="line-clamp-2">
+                        <p className="text-xs">
+                          Lorem, ipsum dolor sit amet consectetur adipisicing
+                          elit. Rerum beatae quam iusto assumenda harum
+                          doloremque fugit incidunt, laborum maxime tempora.
+                        </p>
+                      </div>
+                    </div>
+                    <hr className="mt-2" />
+                  </div>
+                </div>
+
                 <div
                   className={`${
                     rightSideBarNotif ? "flex" : "hidden"
