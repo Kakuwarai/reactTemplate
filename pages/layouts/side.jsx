@@ -54,18 +54,18 @@ const side = () => {
   //console.log(openbar);
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        alert("You clicked outside of me!");
+    const handleOutSideClick = (event) => {
+      if (!ref.current?.contains(event.target)) {
+       console.log('ASDASDSA');
       }
-    }
-    // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ref]);
+    
+
+    window.addEventListener("mousedown", handleOutSideClick);
+    return () => {
+      window.removeEventListener("mousedown", handleOutSideClick);
+    };
+  }, []);
 
   return (
     <TooltipProvider>
@@ -100,7 +100,7 @@ const side = () => {
             </h1>
           </div>
 
-          <div ref={ref} className={`py-10 px-4 h-screen flex flex-col gap-4 pointer-events-none`}>
+          <div ref={ref} className={`py-10 px-4 h-screen flex flex-col gap-4`}>
             {/* //Dashboard */}
 
             <Tooltip disableHoverableContent="false">

@@ -31,6 +31,7 @@ export const header = () => {
   const ref = useRef();
   const ref1 = useRef();
   const ref2 = useRef();
+  const ref3 = useRef();
 
   function handleBarsClick() {
     setopenbar(!openbar);
@@ -91,7 +92,7 @@ export const header = () => {
   return (
     <>
       <nav
-        onClick={()=> console.log('asdasdsa')}
+        onClick={(e)=>e.preventDefault()}
         className=" py-4 w-full bg-white dark:bg-slate-950 border-b top-0 sticky "
       >
         <div className="flex justify-between px-4">
